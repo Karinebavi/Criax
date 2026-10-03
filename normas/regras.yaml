@@ -134,6 +134,62 @@
   vigencia: "conferir na Portaria MESP nº 10/2026"
   status: pendente
 
+# ------------------- ESCRITA: LIMITES DE CARACTERES -------------------------
+# Limites extraídos do formulário textual oficial do SLI (modelos enviados pela
+# Karine, em templates/referencia_textual/). Status pendente: a norma mudou e os
+# limites precisam ser confirmados na Portaria MESP nº 10/2026.
+
+- id: ESC-LIM-OBJETO
+  tema: escrita
+  descricao: >-
+    Objeto do Projeto: limite de 1.000 caracteres.
+  tipo_checagem: limite_caracteres
+  parametros: {alvo: objeto, maximo: 1000}
+  fonte: "Formulário textual oficial do projeto esportivo (SLI)"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: ESC-LIM-OBJETIVOS
+  tema: escrita
+  descricao: >-
+    Objetivos: limite de 1.000 caracteres.
+  tipo_checagem: limite_caracteres
+  parametros: {alvo: objetivos, maximo: 1000}
+  fonte: "Formulário textual oficial do projeto esportivo (SLI)"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: ESC-LIM-METODOLOGIA
+  tema: escrita
+  descricao: >-
+    Metodologia: limite de 10.000 caracteres.
+  tipo_checagem: limite_caracteres
+  parametros: {alvo: metodologia, maximo: 10000}
+  fonte: "Formulário textual oficial do projeto esportivo (SLI)"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: ESC-LIM-JUSTIFICATIVA
+  tema: escrita
+  descricao: >-
+    Justificativa: limite de 10.000 caracteres.
+  tipo_checagem: limite_caracteres
+  parametros: {alvo: justificativa, maximo: 10000}
+  fonte: "Formulário textual oficial do projeto esportivo (SLI)"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: ESC-LIM-META-ITEM
+  tema: escrita
+  descricao: >-
+    Metas: limite de 500 caracteres por item (cada meta, cada indicador e cada
+    instrumento de verificação).
+  tipo_checagem: limite_caracteres
+  parametros: {alvo: meta_item, maximo: 500}
+  fonte: "Formulário textual oficial do projeto esportivo (SLI)"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
 # -------------------------- ORÇAMENTO ---------------------------------------
 - id: ORC-ETP-001
   tema: orcamento

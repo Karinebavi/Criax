@@ -135,6 +135,14 @@ tela, atualizar este `CLAUDE.md` e PARAR até a Karine aprovar.
     Karine (sincronização não sobrescreve o status já gravado no banco).
   - Nome do modelo de IA fica em `config.yaml` (`ia.modelo`), padrão
     `claude-sonnet-5-5`. Nenhuma chamada de IA existe ainda na Fase 0.
+  - **Modelos textuais oficiais (enviados pela Karine):** os quatro arquivos
+    seguem o mesmo esqueleto de 8 blocos do formulário textual do SLI. Guardados
+    em `templates/referencia_textual/` e mapeados em `templates/ESTRUTURA_TEXTUAL.md`.
+    Servem de base para o `projeto_modelo.docx` da Fase 5.
+  - **Limites de caracteres** do formulário (Objeto 1.000; Objetivos 1.000;
+    Metodologia 10.000; Justificativa 10.000; Metas 500/item) viraram regras
+    `ESC-LIM-*` no `regras.yaml` (status `pendente`, fonte = formulário oficial).
+    Novo `tipo_checagem: limite_caracteres` + `checar_limite_caracteres()`.
 
 ## 10. Convenções de código
 

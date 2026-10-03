@@ -23,6 +23,7 @@ from app.regras.carregar import (  # noqa: E402
 from app.regras.checar import (  # noqa: E402
     ALERTA,
     OK,
+    checar_limite_caracteres,
     checar_min_max_itens,
     checar_obrigatorios,
     checar_percentual_maximo,
@@ -61,6 +62,40 @@ def test_regra_do_limite_de_atividade_meio_existe():
     orc = regras["ORC-001"]
     assert orc["tipo_checagem"] == "percentual_maximo"
     assert orc["parametros"]["limite"] == 0.15
+
+
+def test_limites_de_caractere_do_textual_existem():
+    regras = {r["id"]: r for r in carregar_regras()}
+    esperado = {
+        "ESC-LIM-OBJETO": 1000,
+        "ESC-LIM-OBJETIVOS": 1000,
+        "ESC-LIM-METODOLOGIA": 10000,
+        "ESC-LIM-JUSTIFICATIVA": 10000,
+        "ESC-LIM-META-ITEM": 500,
+    }
+    for id_regra, maximo in esperado.items():
+        assert id_regra in regras, id_regra
+        assert regras[id_regra]["tipo_checagem"] == "limite_caracteres"
+        assert regras[id_regra]["parametros"]["maximo"] == maximo
+
+
+# --------------------------- limite_caracteres ------------------------------
+
+def test_texto_dentro_do_limite_eh_ok():
+    r = checar_limite_caracteres("a" * 900, 1000)
+    assert r.situacao == OK
+    assert r.detalhes["quantidade"] == 900
+
+
+def test_texto_acima_do_limite_eh_alerta():
+    r = checar_limite_caracteres("a" * 1200, 1000)
+    assert r.situacao == ALERTA
+    assert r.detalhes["quantidade"] == 1200
+
+
+def test_texto_vazio_nao_quebra():
+    r = checar_limite_caracteres("", 500)
+    assert r.situacao == OK
 
 
 # --------------------------- percentual_maximo ------------------------------

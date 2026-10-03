@@ -98,6 +98,37 @@ def checar_min_max_itens(
     )
 
 
+def checar_limite_caracteres(
+    texto: str,
+    maximo: int,
+    id_regra: str = "",
+    fonte: str = "",
+) -> ResultadoChecagem:
+    """Checa se um texto não ultrapassa o limite de caracteres do formulário SLI.
+
+    Útil para mostrar a contagem por seção e avisar antes de colar no SLI.
+    """
+    quantidade = len(texto or "")
+    dentro = quantidade <= maximo
+    if dentro:
+        mensagem = f"{quantidade} de {maximo} caracteres (dentro do limite)."
+        situacao = OK
+    else:
+        excesso = quantidade - maximo
+        mensagem = (
+            f"{quantidade} de {maximo} caracteres: {excesso} caractere(s) ACIMA "
+            "do limite."
+        )
+        situacao = ALERTA
+    return ResultadoChecagem(
+        id_regra=id_regra,
+        situacao=situacao,
+        mensagem=mensagem,
+        fonte=fonte,
+        detalhes={"quantidade": quantidade, "maximo": maximo},
+    )
+
+
 def checar_obrigatorios(
     itens_presentes: Iterable[str],
     itens_obrigatorios: Iterable[str],

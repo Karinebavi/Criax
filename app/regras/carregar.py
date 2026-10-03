@@ -29,6 +29,7 @@ TIPOS_CHECAGEM_VALIDOS = {
     "min_max_itens",
     "obrigatorio",
     "texto_orientativo",
+    "limite_caracteres",
 }
 STATUS_VALIDOS = {"pendente", "validada", "revogada"}
 
