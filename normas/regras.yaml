@@ -1,0 +1,203 @@
+# ============================================================================
+# Base de regras do Esteira LIE
+# ============================================================================
+# FONTE DA VERDADE do texto das regras. A IA NUNCA sabe regra de memória:
+# ela recebe estas regras no prompt.
+#
+# Campos de cada regra:
+#   id            -> identificador curto e único (ex.: ORC-001)
+#   tema          -> orcamento | escrita | cto | anexos | enquadramento
+#   descricao     -> o que a regra diz, em português direto
+#   tipo_checagem -> percentual_maximo | min_max_itens | obrigatorio | texto_orientativo
+#   parametros    -> dados que a checagem usa (depende do tipo_checagem)
+#   fonte         -> de onde veio a regra (documento e página)
+#   vigencia      -> observação sobre a norma vigente / o que conferir
+#   status        -> pendente | validada | revogada
+#
+# ATENÇÃO: TODO o seed nasce com status "pendente". O Manual do Proponente LIE
+# 2023 é regido pela Portaria 424/2020 e pelo Decreto 6.180/2007, e a
+# regulamentação mudou (LC 222/2025, Decreto 12.861/2026, Portaria MESP nº
+# 10/2026). A Portaria 10/2026 será lida na Fase 5 e só então as regras serão
+# atualizadas, SEMPRE citando o artigo exato. Nada aqui foi validado ainda.
+# ============================================================================
+
+# -------------------------- ESCRITA: OBJETIVOS ------------------------------
+- id: ESC-OBJ-001
+  tema: escrita
+  descricao: >-
+    Os Objetivos devem explicar POR QUE o projeto existe, COMO ele atende à
+    manifestação esportiva e QUAL é o público diretamente beneficiado. Não
+    confundir objetivo com objeto.
+  tipo_checagem: texto_orientativo
+  parametros: {}
+  fonte: "Manual do Proponente LIE 2023"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+# -------------------------- ESCRITA: METODOLOGIA ----------------------------
+- id: ESC-MET-001
+  tema: escrita
+  descricao: >-
+    A Metodologia deve cobrir: método e fases; enquadramento na manifestação
+    esportiva; acessibilidade para idosos e pessoas com deficiência; público
+    (idade, sexo, quantidade por modalidade/núcleo, origem); critérios de
+    seleção; modalidades com categorias, número por categoria e frequência
+    semanal por turno/faixa etária; competições (se do calendário oficial);
+    atividades complementares; coordenação geral; forma de contratação de RH
+    (RPA, CLT, PJ) e encargos; parcerias; destinação do material permanente;
+    divulgação; regras de alojamento de menores (ECA, CMDCA) quando houver;
+    responsável pela execução (vedada intermediação); cobrança de
+    taxas/mensalidades.
+  tipo_checagem: obrigatorio
+  parametros:
+    itens_obrigatorios:
+      - "metodo_e_fases"
+      - "enquadramento_manifestacao"
+      - "acessibilidade_idosos_pcd"
+      - "publico_idade_sexo_quantidade_origem"
+      - "criterios_de_selecao"
+      - "modalidades_categorias_frequencia"
+      - "competicoes_calendario_oficial"
+      - "atividades_complementares"
+      - "coordenacao_geral"
+      - "contratacao_rh_e_encargos"
+      - "parcerias"
+      - "destinacao_material_permanente"
+      - "divulgacao"
+      - "alojamento_menores_eca_cmdca"
+      - "responsavel_execucao_sem_intermediacao"
+      - "cobranca_taxas_mensalidades"
+  fonte: "Manual do Proponente LIE 2023"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+# -------------------------- ESCRITA: JUSTIFICATIVA --------------------------
+- id: ESC-JUS-001
+  tema: escrita
+  descricao: >-
+    A Justificativa deve trazer: contexto; dados que descrevem o
+    problema/oportunidade; situação-problema antes do projeto; importância para
+    o esporte na região; motivo da escolha dos locais com indicadores sociais e
+    econômicos; razões para buscar a LIE; breve histórico da entidade
+    (complementado pela CTO).
+  tipo_checagem: texto_orientativo
+  parametros: {}
+  fonte: "Manual do Proponente LIE 2023"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: ESC-JUS-002
+  tema: escrita
+  descricao: >-
+    Indicadores sociais e econômicos do local NÃO podem ser inventados. Quando
+    faltarem, usar o marcador [PREENCHER: indicador + fonte] para a Karine
+    completar (ex.: IBGE, IDH, Atlas do Desenvolvimento Humano).
+  tipo_checagem: texto_orientativo
+  parametros: {}
+  fonte: "Regra inegociável nº 2 do projeto + Manual do Proponente LIE 2023"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+# -------------------------- ESCRITA: METAS ----------------------------------
+- id: ESC-MTQ-001
+  tema: escrita
+  descricao: >-
+    Metas QUALITATIVAS: mínimo 2 e máximo 5.
+  tipo_checagem: min_max_itens
+  parametros: {alvo: metas_qualitativas, minimo: 2, maximo: 5}
+  fonte: "Manual do Proponente LIE 2023"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: ESC-MTN-001
+  tema: escrita
+  descricao: >-
+    Metas QUANTITATIVAS: mínimo 2 e máximo 5.
+  tipo_checagem: min_max_itens
+  parametros: {alvo: metas_quantitativas, minimo: 2, maximo: 5}
+  fonte: "Manual do Proponente LIE 2023"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: ESC-MTA-001
+  tema: escrita
+  descricao: >-
+    Cada meta (qualitativa ou quantitativa) deve ter indicador, marco de
+    referência (ponto de partida) e instrumento de verificação.
+  tipo_checagem: obrigatorio
+  parametros:
+    itens_obrigatorios:
+      - "indicador"
+      - "marco_de_referencia"
+      - "instrumento_de_verificacao"
+  fonte: "Manual do Proponente LIE 2023"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+# -------------------------- ORÇAMENTO ---------------------------------------
+- id: ORC-ETP-001
+  tema: orcamento
+  descricao: >-
+    Etapas orçamentárias: Atividade Fim, Atividade Meio, Elaboração e Captação
+    de recursos (e etapa de acompanhamento em projetos de obra).
+  tipo_checagem: texto_orientativo
+  parametros:
+    etapas:
+      - "Atividade Fim"
+      - "Atividade Meio"
+      - "Elaboração e Captação de recursos"
+      - "Acompanhamento (projetos de obra)"
+  fonte: "Manual do Proponente LIE 2023"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: ORC-001
+  tema: orcamento
+  descricao: >-
+    Atividade Meio limitada a 15% da Atividade Fim.
+  tipo_checagem: percentual_maximo
+  parametros: {numerador: atividade_meio, denominador: atividade_fim, limite: 0.15}
+  fonte: "Manual do Proponente LIE 2023, p. 47 e p. 82"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+# -------------------------- CTO ---------------------------------------------
+- id: CTO-DOC-001
+  tema: cto
+  descricao: >-
+    Documentos que podem comprovar a capacidade técnico-operativa: relatório de
+    eventos realizados com logomarca/identidade visual; capacidade instalada e
+    pessoal técnico (currículo, documentos, declaração de ciência); fotos com
+    logomarca; reportagens com o nome da entidade; publicações com o nome da
+    entidade; site; termos de parceria.
+  tipo_checagem: texto_orientativo
+  parametros:
+    documentos_aceitos:
+      - "relatorio_eventos_com_logomarca"
+      - "capacidade_instalada_e_pessoal_tecnico"
+      - "fotos_com_logomarca"
+      - "reportagens_com_nome_da_entidade"
+      - "publicacoes_com_nome_da_entidade"
+      - "site"
+      - "termos_de_parceria"
+  fonte: "Manual do Proponente LIE 2023"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+# -------------------------- ANEXOS OBRIGATÓRIOS -----------------------------
+- id: ANX-001
+  tema: anexos
+  descricao: >-
+    Anexos obrigatórios de projetos esportivos: CTO; declaração de inexistência
+    de sobreposição de recursos; declaração de não enquadramento nas vedações;
+    declaração de não capacidade de atrair investimentos.
+  tipo_checagem: obrigatorio
+  parametros:
+    itens_obrigatorios:
+      - "cto"
+      - "declaracao_inexistencia_sobreposicao_recursos"
+      - "declaracao_nao_enquadramento_vedacoes"
+      - "declaracao_nao_capacidade_atrair_investimentos"
+  fonte: "Manual do Proponente LIE 2023"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente

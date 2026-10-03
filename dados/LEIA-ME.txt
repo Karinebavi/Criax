@@ -1,0 +1,6 @@
+Esta pasta guarda seus dados:
+
+- catalogo_itens.xlsx  -> seu catálogo de itens e valores de referência
+                          (modelo vazio criado na Fase 6).
+- osc/<cnpj>/          -> mídia e saídas de cada OSC (criado automaticamente;
+                          NÃO é versionado, ver .gitignore).

@@ -1,0 +1,7 @@
+Coloque aqui os PDFs das normas da LIE.
+
+Em especial:
+- Manual do Proponente LIE 2023 (base do seed inicial de regras).
+- Portaria MESP nº 10/2026 (será lida na Fase 5 para atualizar as regras).
+
+Os PDFs não são versionados (ver .gitignore). Eles ficam só no seu computador.

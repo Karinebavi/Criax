@@ -1,0 +1,8 @@
+Aqui ficarão os modelos Word com tags (docxtpl):
+
+- cto_modelo.docx     -> criado na Fase 4
+- projeto_modelo.docx -> criado na Fase 5
+
+Você poderá substituir cada modelo pelo seu próprio Word, desde que mantenha as
+mesmas tags. As tags e instruções serão documentadas quando cada modelo for
+criado.

@@ -1,0 +1,33 @@
+# Credenciais
+.env
+
+# Ambiente virtual
+.venv/
+venv/
+
+# Banco de dados local
+*.db
+*.sqlite
+*.sqlite3
+
+# Mídia e saídas por OSC (dados sensíveis, não versionar)
+dados/osc/
+
+# PDFs das normas (arquivos pesados; a Karine mantém localmente)
+normas/fontes/*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Sistema operacional / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Logs
+*.log

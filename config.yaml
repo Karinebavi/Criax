@@ -1,0 +1,32 @@
+# Configuração do Esteira LIE
+# Edite com cuidado. Linhas que começam com "#" são comentários.
+
+ia:
+  # Modelo Claude usado nas tarefas de IA (Sonnet mais recente).
+  modelo: "claude-sonnet-5-5"
+  max_tokens: 4096
+  # Privacidade: por padrão SÓ TEXTO vai para a API (legendas, matérias).
+  # Mude para true apenas se quiser enviar imagens para a IA analisar.
+  enviar_imagens_para_ia: false
+
+coleta:
+  instagram:
+    # Limite de posts por coleta (o que vier primeiro).
+    limite_posts: 300
+    meses_retroativos: 24
+    # Pausa entre requisições, em segundos (evita bloqueio).
+    pausa_segundos: 5
+    usar_login: false
+  noticias:
+    max_resultados: 30
+  limites_arquivo:
+    imagem_mb: 5
+    pdf_mb: 10
+
+caminhos:
+  # Caminhos relativos à raiz do projeto.
+  banco: "esteira_lie.db"
+  regras: "normas/regras.yaml"
+  catalogo_itens: "dados/catalogo_itens.xlsx"
+  templates: "templates"
+  dados_osc: "dados/osc"
