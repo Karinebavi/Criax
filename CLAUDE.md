@@ -143,6 +143,16 @@ tela, atualizar este `CLAUDE.md` e PARAR até a Karine aprovar.
     Metodologia 10.000; Justificativa 10.000; Metas 500/item) viraram regras
     `ESC-LIM-*` no `regras.yaml` (status `pendente`, fonte = formulário oficial).
     Novo `tipo_checagem: limite_caracteres` + `checar_limite_caracteres()`.
+  - **Modelos de planilha orçamentária (enviados pela Karine):** quatro arquivos,
+    mesmo layout. Guardados em `templates/referencia_orcamento/` e mapeados em
+    `templates/ESTRUTURA_ORCAMENTO.md`. Layout por etapa (Atividade Fim/Meio),
+    blocos de categoria com detalhamento, Total do item = `Valor Unit × Duração ×
+    Quantidade`, 3 orçamentos + MÉDIA, memória de cálculo inline na coluna
+    "Resumo do Detalhamento". Fechamento: % Meio/Fim (ORC-001), Elaboração/Captação
+    (% variável com teto R$ 100.000 → nova regra `ORC-CAP-001`, pendente), Total.
+    Percentual de captação (5/7/10%) e fator de encargos CLT (0,678 / 68,5%) são
+    **premissas variáveis da Karine**, não números fixos do sistema. A Fase 6
+    acrescenta abas Resumo / Memória de cálculo / Checagens sobre esse layout.
 
 ## 10. Convenções de código
 

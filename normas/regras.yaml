@@ -217,6 +217,19 @@
   vigencia: "conferir na Portaria MESP nº 10/2026"
   status: pendente
 
+- id: ORC-CAP-001
+  tema: orcamento
+  descricao: >-
+    Valor de Elaboração e Captação de recursos: calculado como um percentual
+    sobre o total (Atividade Fim + Atividade Meio), com TETO de R$ 100.000,00.
+    O percentual é definido por projeto pela Karine (nos modelos aparecem 5%, 7%
+    e 10%); o teto de R$ 100.000 é constante.
+  tipo_checagem: texto_orientativo
+  parametros: {base: atividade_fim_mais_meio, teto_reais: 100000}
+  fonte: "Modelos de planilha orçamentária (templates/referencia_orcamento/)"
+  vigencia: "confirmar percentual e teto na Portaria MESP nº 10/2026"
+  status: pendente
+
 # -------------------------- CTO ---------------------------------------------
 - id: CTO-DOC-001
   tema: cto
