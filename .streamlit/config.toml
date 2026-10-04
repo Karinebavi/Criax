@@ -1,0 +1,8 @@
+# Configuração da interface Streamlit do Esteira LIE.
+[browser]
+# Não enviar estatísticas de uso.
+gatherUsageStats = false
+
+[server]
+# Mantém a abertura automática no navegador.
+headless = false

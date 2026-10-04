@@ -37,6 +37,13 @@ if not exist ".venv\Scripts\python.exe" (
   call .venv\Scripts\activate.bat
 )
 
+REM Evita a pergunta de e-mail do Streamlit na primeira execucao.
+if not exist "%USERPROFILE%\.streamlit" mkdir "%USERPROFILE%\.streamlit"
+if not exist "%USERPROFILE%\.streamlit\credentials.toml" (
+  > "%USERPROFILE%\.streamlit\credentials.toml" echo [general]
+  >> "%USERPROFILE%\.streamlit\credentials.toml" echo email = ""
+)
+
 echo.
 echo  Abrindo o Esteira LIE no seu navegador...
 echo  Para FECHAR o sistema, feche esta janela preta.
