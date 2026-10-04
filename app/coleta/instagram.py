@@ -26,6 +26,7 @@ def coletar_instagram(
     pasta_midia: str | None = None,
     usuario_login: str | None = None,
     senha_login: str | None = None,
+    sessao_navegador: str | None = None,
 ) -> ResultadoColeta:
     """Coleta posts públicos de um perfil do Instagram.
 
@@ -56,6 +57,13 @@ def coletar_instagram(
         compress_json=False,
         quiet=True,
     )
+
+    # Opção preferida: usar a SESSÃO DO NAVEGADOR (você já logada no Instagram).
+    # Lê os cookies do navegador; não digita senha, nada é enviado para fora.
+    if sessao_navegador:
+        ok, msg = _carregar_sessao_navegador(carregador, sessao_navegador)
+        if not ok:
+            return ResultadoColeta(ok=False, erro="sessao", mensagem=msg)
 
     # Login opcional (o Instagram hoje exige login até para perfis públicos).
     # A senha fica só na memória desta execução; nada é gravado nem enviado.
@@ -128,6 +136,49 @@ def coletar_instagram(
         )
 
     return ResultadoColeta(ok=True, itens=itens)
+
+
+def _carregar_sessao_navegador(carregador, navegador: str) -> tuple[bool, str]:
+    """Carrega os cookies do navegador no instaloader (login sem senha).
+
+    navegador: 'chrome' | 'edge' | 'firefox' | 'brave'. Devolve (ok, mensagem).
+    """
+    try:
+        import browser_cookie3
+    except ImportError:
+        return False, "A biblioteca browser_cookie3 não está instalada. Rode o instalador de novo."
+
+    leitores = {
+        "chrome": getattr(browser_cookie3, "chrome", None),
+        "edge": getattr(browser_cookie3, "edge", None),
+        "firefox": getattr(browser_cookie3, "firefox", None),
+        "brave": getattr(browser_cookie3, "brave", None),
+    }
+    leitor = leitores.get((navegador or "").lower())
+    if leitor is None:
+        return False, f"Navegador '{navegador}' não suportado para ler a sessão."
+
+    try:
+        cookies = leitor(domain_name="instagram.com")
+    except Exception as erro:
+        return False, (
+            f"Não consegui ler a sessão do {navegador}. Dicas: feche o {navegador} e "
+            f"tente de novo; confirme que você está logada no Instagram nele; ou tente "
+            f"com o Firefox. (Detalhe técnico: {erro})"
+        )
+
+    carregador.context._session.cookies.update(cookies)
+    try:
+        usuario = carregador.test_login()
+    except Exception:
+        usuario = None
+    if not usuario:
+        return False, (
+            f"Você não parece estar logada no Instagram no {navegador}. Abra o "
+            f"Instagram nesse navegador, faça login, e tente de novo."
+        )
+    carregador.context.username = usuario
+    return True, f"Sessão do {navegador} carregada — logada como @{usuario}."
 
 
 def _normalizar_handle(entrada: str | None) -> str:

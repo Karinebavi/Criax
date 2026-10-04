@@ -73,13 +73,23 @@ with col2:
     handle = st.text_input("@ do Instagram", value=(osc.instagram or "").lstrip("@"))
     limite = st.number_input("Máximo de posts", 1, 1000, int(cfg_insta.get("limite_posts", 300)))
     st.caption(
-        "O Instagram hoje exige login até para perfis públicos. Para coletar "
-        "automático, informe um login abaixo (use de preferência uma conta "
-        "secundária). A senha fica só no seu computador — não é salva nem enviada."
+        "O Instagram hoje exige estar logado, mesmo para perfis públicos. "
+        "O jeito mais simples: fique logada no Instagram no seu navegador e o "
+        "sistema usa essa sessão — você não digita senha aqui."
     )
-    with st.expander("Entrar no Instagram (para liberar a coleta)"):
-        ig_user = st.text_input("Usuário do Instagram (login)")
-        ig_pass = st.text_input("Senha", type="password")
+    modo = st.radio(
+        "Como entrar no Instagram",
+        ["Usar a sessão do meu navegador (recomendado)", "Usar usuário e senha"],
+    )
+    ig_user = ig_pass = navegador = None
+    if modo.startswith("Usar a sessão"):
+        navegador = st.selectbox("Navegador onde você está logada", ["chrome", "edge", "firefox", "brave"])
+        st.caption("Dica: deixe o Instagram aberto e logado nesse navegador. Se der erro de leitura, feche o navegador e tente de novo, ou use o Firefox.")
+    else:
+        with st.expander("Entrar com usuário e senha (use uma conta secundária)"):
+            ig_user = st.text_input("Usuário do Instagram (login)")
+            ig_pass = st.text_input("Senha", type="password")
+            st.caption("A senha fica só no seu computador — não é salva nem enviada.")
     if st.button("Coletar Instagram"):
         with st.spinner("Coletando posts (respeitando pausa entre requisições)..."):
             res = coletar_instagram(
@@ -91,6 +101,7 @@ with col2:
                 pasta_midia=str(pasta_midia()),
                 usuario_login=(ig_user or "").strip() or None,
                 senha_login=(ig_pass or "").strip() or None,
+                sessao_navegador=navegador,
             )
         if not res.ok and not res.itens:
             st.error(res.mensagem)

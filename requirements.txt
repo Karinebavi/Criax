@@ -10,6 +10,7 @@ docxtpl>=0.18
 python-docx>=1.1
 openpyxl>=3.1
 Pillow>=10.4
+browser-cookie3>=0.19
 PyYAML>=6.0
 pandas>=2.2
 python-dotenv>=1.0

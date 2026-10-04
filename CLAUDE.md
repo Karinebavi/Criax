@@ -205,6 +205,14 @@ tela, atualizar este `CLAUDE.md` e PARAR até a Karine aprovar.
     `atualizar_evidencia`). Fluxo validado ponta a ponta (cadastro→notícias→
     curadoria→CTO). **Atalho 1 clique Windows:** `EsteiraLIE_Windows.bat`
     (instala na 1ª vez e abre); guia em `GUIA_WINDOWS.md`.
+  - **Instagram exige login (2026):** a leitura anônima foi desativada pelo
+    Instagram (falha mesmo em IP residencial). Soluções no sistema:
+    (1) **sessão do navegador** via `browser_cookie3` (Chrome/Edge/Firefox/Brave)
+    — a Karine fica logada no navegador e o sistema usa os cookies, sem senha
+    (`_carregar_sessao_navegador` + `test_login`); é a opção recomendada e
+    escolhida pela Karine. (2) login usuário/senha opcional. Coleta aceita link
+    completo ou @ (`_normalizar_handle`). Para a nuvem (futuro), a opção seria uma
+    API paga de terceiros (HikerAPI), que não precisa da senha e roda em datacenter.
   - **Ajustes SQLModel 0.0.47:** datetime precisa de fuso → `_agora()` grava em
     UTC; `Evidencia.data_do_fato` virou texto ISO (evita conflito de tipo date no
     SQLite). OSC ganhou `telefone`, `email`, `logo_path`; Evidencia ganhou

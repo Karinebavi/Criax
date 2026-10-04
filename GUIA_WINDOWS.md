@@ -25,8 +25,14 @@ Feito para não-programador. Siga na ordem.
 ## 4. Usar (fluxo da CTO)
 No menu à esquerda, siga a ordem:
 1. **Cadastro da OSC** — preencha os dados da entidade e clique em Salvar.
-2. **Coleta** — clique em *Buscar reportagens* e em *Coletar Instagram*
-   (no seu computador o Instagram funciona normalmente).
+2. **Coleta** —
+   - *Buscar reportagens*: traz notícias da entidade.
+   - *Coletar Instagram*: o Instagram exige estar logado. Deixe o **Instagram
+     aberto e logado no seu navegador** (Chrome/Edge/Firefox), escolha a opção
+     **"Usar a sessão do meu navegador"**, selecione o navegador e clique em
+     *Coletar Instagram*. Você **não digita senha** — o sistema usa o login que
+     já está no navegador. Se der erro de leitura dos cookies, **feche o
+     navegador** e tente de novo, ou troque para o Firefox.
 3. **Curadoria** — para cada evidência: marque se tem logomarca e prática
    esportiva, e **Aprovar** ou **Descartar**. Em foto com logo pequena, marque
    "aplicar zoom+seta".
