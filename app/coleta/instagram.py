@@ -138,15 +138,39 @@ def coletar_instagram(
     return ResultadoColeta(ok=True, itens=itens)
 
 
+def _importar_browser_cookie3():
+    """Importa o browser_cookie3; se faltar, tenta instalar na hora (auto-correção)."""
+    try:
+        import browser_cookie3
+        return browser_cookie3
+    except ImportError:
+        pass
+    # Tenta instalar automaticamente no mesmo Python que está rodando o sistema.
+    import subprocess
+    import sys
+
+    try:
+        subprocess.run(
+            [sys.executable, "-m", "pip", "install", "browser-cookie3"],
+            check=True, capture_output=True, text=True,
+        )
+        import browser_cookie3  # noqa: F811
+        return browser_cookie3
+    except Exception:
+        return None
+
+
 def _carregar_sessao_navegador(carregador, navegador: str) -> tuple[bool, str]:
     """Carrega os cookies do navegador no instaloader (login sem senha).
 
     navegador: 'chrome' | 'edge' | 'firefox' | 'brave'. Devolve (ok, mensagem).
     """
-    try:
-        import browser_cookie3
-    except ImportError:
-        return False, "A biblioteca browser_cookie3 não está instalada. Rode o instalador de novo."
+    browser_cookie3 = _importar_browser_cookie3()
+    if browser_cookie3 is None:
+        return False, (
+            "Não consegui carregar nem instalar o leitor de cookies (browser_cookie3). "
+            "Feche o sistema, rode o instalar.bat e tente de novo."
+        )
 
     leitores = {
         "chrome": getattr(browser_cookie3, "chrome", None),
