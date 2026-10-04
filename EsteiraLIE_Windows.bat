@@ -23,19 +23,21 @@ if %errorlevel%==0 (set PY=python) else (
   )
 )
 
-REM Cria o ambiente e instala, apenas na primeira vez.
+REM Cria o ambiente virtual na primeira vez.
 if not exist ".venv\Scripts\python.exe" (
   echo.
   echo  Primeira execucao: preparando o Esteira LIE...
   echo  Isso pode demorar alguns minutos. Nao feche esta janela.
   echo.
   %PY% -m venv .venv
-  call .venv\Scripts\activate.bat
-  python -m pip install --upgrade pip
-  python -m pip install -r requirements.txt
-) else (
-  call .venv\Scripts\activate.bat
 )
+
+REM Ativa o ambiente e SEMPRE confere as dependencias (rapido quando ja instaladas;
+REM garante que novas bibliotecas entrem quando o sistema e atualizado).
+call .venv\Scripts\activate.bat
+echo  Conferindo as bibliotecas necessarias...
+python -m pip install --upgrade pip >nul 2>nul
+python -m pip install -r requirements.txt
 
 REM Evita a pergunta de e-mail do Streamlit na primeira execucao.
 if not exist "%USERPROFILE%\.streamlit" mkdir "%USERPROFILE%\.streamlit"
