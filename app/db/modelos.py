@@ -93,6 +93,12 @@ class Evidencia(SQLModel, table=True):
     tem_menores_identificaveis: str = "nao_verificado"  # sim | nao | nao_verificado
     status: str = "pendente"  # pendente | aprovada | descartada
     nota_curadoria: Optional[str] = None
+    # Campos exigidos pelo Checklist CTO v3 (ver templates/ESTRUTURA_CTO.md):
+    forma: Optional[str] = None  # link | print  (link é sempre preferível)
+    eh_de_terceiros: str = "nao_verificado"  # sim | nao | nao_verificado (imprensa/órgão independente vale mais)
+    mostra_pratica_esportiva: str = "nao_verificado"  # sim | nao | nao_verificado
+    link_testado: str = "nao_verificado"  # sim | nao | nao_verificado (link quebrado é descartado)
+    bloco_cto: Optional[str] = None  # 1 | 2 | 3 | 4 (bloco da CTO em que a evidência entra)
 
 
 class Projeto(SQLModel, table=True):

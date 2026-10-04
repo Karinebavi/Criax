@@ -231,25 +231,156 @@
   status: pendente
 
 # -------------------------- CTO ---------------------------------------------
+# Estrutura baseada no Checklist CTO v3 (equipe CASE). Ver mapa completo em
+# templates/ESTRUTURA_CTO.md.
+
+- id: CTO-BLOCOS-001
+  tema: cto
+  descricao: >-
+    A CTO é organizada em 4 blocos, montados nesta ordem: (1) Relatório de Eventos
+    e Evidências (fotos, reportagens, posts, súmulas, DOU, ofícios, atestados de
+    terceiros); (2) Capacidade Técnica Instalada / Equipe e Notório Saber;
+    (3) Termos de Parceria e Cooperação; (4) Conferência Final, Ordem e Revisão.
+    As comprovações esportivas vêm ANTES dos termos de parceria.
+  tipo_checagem: texto_orientativo
+  parametros:
+    blocos:
+      - "1_relatorio_eventos_e_evidencias"
+      - "2_equipe_tecnica_e_notorio_saber"
+      - "3_parcerias_e_cooperacao"
+      - "4_conferencia_final_ordem_revisao"
+  fonte: "Checklist CTO v3 (equipe CASE)"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: CTO-HIER-001
+  tema: cto
+  descricao: >-
+    Hierarquia de evidências: Fotos/Reportagens/Publicações (mais fortes) →
+    Parcerias → Currículos (último recurso). Não apoiar a CTO majoritariamente em
+    currículos; buscar primeiro as evidências visuais e midiáticas.
+  tipo_checagem: texto_orientativo
+  parametros:
+    ordem_forca: ["fotos_reportagens_publicacoes", "parcerias", "curriculos"]
+  fonte: "Checklist CTO v3 (orientação Leonardo/João)"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
 - id: CTO-DOC-001
   tema: cto
   descricao: >-
-    Documentos que podem comprovar a capacidade técnico-operativa: relatório de
-    eventos realizados com logomarca/identidade visual; capacidade instalada e
-    pessoal técnico (currículo, documentos, declaração de ciência); fotos com
-    logomarca; reportagens com o nome da entidade; publicações com o nome da
-    entidade; site; termos de parceria.
+    Tipos de evidência aceitos no Bloco 1: fotos de atividades esportivas com
+    logomarca; reportagens de imprensa citando a entidade; posts em redes com link
+    funcional; súmulas oficiais; certificados de federações/confederações/ligas;
+    publicações no DOU; ofícios de órgãos públicos; atestados de capacidade técnica
+    emitidos por terceiros. Site e redes complementam.
   tipo_checagem: texto_orientativo
   parametros:
     documentos_aceitos:
-      - "relatorio_eventos_com_logomarca"
-      - "capacidade_instalada_e_pessoal_tecnico"
       - "fotos_com_logomarca"
-      - "reportagens_com_nome_da_entidade"
-      - "publicacoes_com_nome_da_entidade"
-      - "site"
-      - "termos_de_parceria"
-  fonte: "Manual do Proponente LIE 2023"
+      - "reportagens_imprensa"
+      - "posts_redes_com_link"
+      - "sumulas_oficiais"
+      - "certificados_federacoes"
+      - "publicacoes_dou"
+      - "oficios_orgaos_publicos"
+      - "atestados_capacidade_de_terceiros"
+      - "site_e_redes"
+  fonte: "Checklist CTO v3 + Manual do Proponente LIE 2023"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: CTO-EV-LOGO-001
+  tema: cto
+  descricao: >-
+    Foto sem a logomarca/identidade visual da entidade visível é DESCARTADA pelo
+    técnico do MESP (falta nexo de autoria). A foto deve mostrar a prática
+    esportiva e vincular a atividade à entidade.
+  tipo_checagem: texto_orientativo
+  parametros: {descarta_se: foto_sem_logomarca}
+  fonte: "Checklist CTO v3 (item 1.2) + lembretes do painel"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: CTO-EV-LINK-001
+  tema: cto
+  descricao: >-
+    LINK é sempre preferível ao PRINT (permite verificação em tempo real). Se usar
+    print, a DATA DE PUBLICAÇÃO deve estar visível na imagem. Todos os links
+    precisam ser TESTADOS na data de envio; link quebrado é evidência descartada.
+  tipo_checagem: texto_orientativo
+  parametros: {preferir: link, print_exige: data_visivel, exigir_links_testados: true}
+  fonte: "Checklist CTO v3 (itens 1.7, 1.8, 4.2)"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: CTO-EV-TERCEIROS-001
+  tema: cto
+  descricao: >-
+    Evidências produzidas por TERCEIROS (imprensa independente, federações,
+    órgãos públicos) têm mais peso probatório que conteúdo autoproduzido pela
+    entidade. Autodeclaração isolada NÃO é aceita como prova de CTO — a CTO precisa
+    de evidências de fontes diversas.
+  tipo_checagem: texto_orientativo
+  parametros: {autodeclaracao_isolada: nao_aceita}
+  fonte: "Checklist CTO v3 (itens 1.6, 1.10, 4.5)"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: CTO-EQUIPE-001
+  tema: cto
+  descricao: >-
+    Equipe técnica: currículo DIRECIONADO à função e à modalidade do projeto
+    (currículo genérico é rejeitado); RG/CNH legível de cada profissional;
+    Declaração de Ciência e Responsabilidade assinada PELO PROFISSIONAL (não pelo
+    presidente); documento de Notório Saber em modelo validado; pelo menos 1
+    profissional com notório saber esportivo comprovável.
+  tipo_checagem: obrigatorio
+  parametros:
+    itens_obrigatorios:
+      - "curriculo_direcionado"
+      - "rg_ou_cnh_legivel"
+      - "declaracao_ciencia_assinada_pelo_profissional"
+      - "documento_notorio_saber_modelo_validado"
+      - "ao_menos_um_profissional_com_notorio_saber_esportivo"
+  fonte: "Checklist CTO v3 (Bloco 2) + orientação Léo/Roberta/Rafael"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: CTO-PARC-001
+  tema: cto
+  descricao: >-
+    Termos de parceria: documento assinado por ambas as partes (carta de intenção
+    ou acordo verbal não valem); identificação dos assinantes com RG e CPF; objeto
+    claramente relacionado à atividade esportiva (com a modalidade); documentação
+    regular da entidade parceira (a irregularidade do parceiro contamina a CTO).
+  tipo_checagem: obrigatorio
+  parametros:
+    itens_obrigatorios:
+      - "termo_assinado_ambas_as_partes"
+      - "identificacao_assinantes_rg_cpf"
+      - "objeto_esportivo_explicito"
+      - "documentacao_regular_do_parceiro"
+  fonte: "Checklist CTO v3 (Bloco 3)"
+  vigencia: "conferir na Portaria MESP nº 10/2026"
+  status: pendente
+
+- id: CTO-REV-001
+  tema: cto
+  descricao: >-
+    Conferência final: documentos legíveis e sem cortes; sem duplicatas; nenhuma
+    autodeclaração como único documento; revisão cruzada por outro mentor ou pela
+    coordenação antes do envio; montagem seguindo a hierarquia de evidências e a
+    ordem dos documentos.
+  tipo_checagem: obrigatorio
+  parametros:
+    itens_obrigatorios:
+      - "documentos_legiveis_sem_cortes"
+      - "sem_duplicatas"
+      - "nao_so_autodeclaracao"
+      - "revisao_cruzada"
+      - "ordem_e_hierarquia_respeitadas"
+  fonte: "Checklist CTO v3 (Bloco 4)"
   vigencia: "conferir na Portaria MESP nº 10/2026"
   status: pendente
 

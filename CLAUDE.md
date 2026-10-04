@@ -153,6 +153,23 @@ tela, atualizar este `CLAUDE.md` e PARAR até a Karine aprovar.
     Percentual de captação (5/7/10%) e fator de encargos CLT (0,678 / 68,5%) são
     **premissas variáveis da Karine**, não números fixos do sistema. A Fase 6
     acrescenta abas Resumo / Memória de cálculo / Checagens sobre esse layout.
+  - **CTO reestruturada pelo Checklist CTO v3 (equipe CASE):** guardado em
+    `templates/referencia_cto/` e mapeado em `templates/ESTRUTURA_CTO.md`. A CTO
+    passa a ter 4 blocos / 37 itens, hierarquia de evidências (fotos/reportagens/
+    publicações → parcerias → currículos) e ordem de montagem (evidências
+    esportivas antes dos termos). Regras de descarte firmes: foto sem logomarca
+    descartada; LINK > PRINT (print só com data visível); links testados;
+    autodeclaração isolada não aceita; evidências de terceiros valem mais. A
+    seção `cto` do `regras.yaml` passou de 1 para 9 regras (CTO-BLOCOS-001,
+    CTO-HIER-001, CTO-DOC-001, CTO-EV-LOGO-001, CTO-EV-LINK-001,
+    CTO-EV-TERCEIROS-001, CTO-EQUIPE-001, CTO-PARC-001, CTO-REV-001). Total: 25
+    regras. O modelo `Evidencia` ganhou os campos `forma` (link/print),
+    `eh_de_terceiros`, `mostra_pratica_esportiva`, `link_testado`, `bloco_cto`.
+  - **Impacto nas fases:** a Coleta (Fase 2) de notícias/reportagens/posts passa a
+    classificar cada achado por bloco e a marcar link/print, de-terceiros, prática
+    esportiva e logomarca; a Curadoria (Fase 3) testa link e descarta foto sem
+    logomarca; a trilha CTO (Fase 4) organiza as evidências nos 4 blocos e exporta
+    na ordem de montagem, com painel de completude por bloco (14/8/8/7).
 
 ## 10. Convenções de código
 
