@@ -176,10 +176,20 @@ tela, atualizar este `CLAUDE.md` e PARAR até a Karine aprovar.
     bloquear), `app/coleta/classificar.py` (converte em evidências do Bloco 1 com
     força probatória) e `scripts/prototipo_coleta.py` (roda para 1 OSC e gera
     relatório HTML). Testes `tests/test_coleta.py` sem rede. Total: 24 testes.
-  - **BLOQUEIO DE REDE neste ambiente de nuvem:** a política de egress bloqueia
-    news.google.com e instagram.com (403). O protótipo só roda de verdade se a
-    Karine liberar esses domínios em Network access (Edit do ambiente) OU na
-    máquina dela. Código pronto; falta a rede. NÃO burlar o proxy.
+  - **REDE liberada (2026-10-04):** após a Karine abrir o Network access, o
+    news.google.com passou a responder 200 e a coleta de notícias RODA aqui.
+    PORÉM: (a) o Instagram responde **429 Too Many Requests** — é o Instagram
+    bloqueando o IP de datacenter desta nuvem, NÃO a config de rede; não dá para
+    coletar posts/fotos do Instagram daqui de forma confiável, e o projeto proíbe
+    burlar; a coleta de Instagram é confiável na máquina da Karine (IP
+    residencial). (b) O site guerreirasemacao.com.br devolve 403 ao robô.
+    (c) Mesmo com rede boa, a busca de imprensa para a Guerreiras em Ação trouxe
+    quase nada (1 item não confirmado). Conclusão: a montagem AUTOMÁTICA com fotos
+    do Instagram só acontece na máquina da Karine; daqui dá para automatizar
+    notícias + site (quando o site permitir) + o esqueleto da CTO.
+  - **gerar_cto.py (base da Fase 4):** `app/documentos/gerar_cto.py` monta o .docx
+    na estrutura do Checklist (4 blocos, ordem, rastreabilidade EV-####), com
+    [PREENCHER] só no que faltar. Não inventa foto/documento.
 
 ## 10. Convenções de código
 

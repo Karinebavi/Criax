@@ -17,9 +17,56 @@ from typing import Optional
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.text import WD_COLOR_INDEX
-from docx.shared import Pt, RGBColor
+from docx.shared import Inches, Pt, RGBColor
 
 TEAL = RGBColor(0x0F, 0x76, 0x6E)
+CINZA = RGBColor(0x5B, 0x6A, 0x68)
+
+
+def _timbrado(doc, osc: dict) -> None:
+    """Monta o timbrado (cabeçalho institucional) no topo do documento.
+
+    Usa a logo (osc['logo_path']) quando houver; senão, deixa marcador. Abaixo,
+    nome em destaque e uma linha com CNPJ · endereço · contato.
+    """
+    logo = osc.get("logo_path")
+    topo = doc.add_paragraph()
+    topo.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    if logo:
+        try:
+            topo.add_run().add_picture(str(logo), width=Inches(1.4))
+        except Exception:
+            _preencher(topo, "inserir a logomarca da instituição (arquivo de imagem)")
+    else:
+        _preencher(topo, "inserir a logomarca da instituição (arquivo de imagem)")
+
+    nome = doc.add_paragraph()
+    nome.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    rn = nome.add_run((osc.get("nome") or "").upper())
+    rn.bold = True
+    rn.font.size = Pt(15)
+    rn.font.color.rgb = TEAL
+
+    partes = []
+    if osc.get("cnpj"):
+        partes.append(f"CNPJ {osc['cnpj']}")
+    if osc.get("endereco"):
+        partes.append(osc["endereco"])
+    contato = " · ".join(filter(None, [osc.get("telefone"), osc.get("email"), osc.get("site")]))
+    if contato:
+        partes.append(contato)
+    if partes:
+        linha = doc.add_paragraph()
+        linha.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        r = linha.add_run("  |  ".join(partes))
+        r.font.size = Pt(9)
+        r.font.color.rgb = CINZA
+
+    # Linha divisória (regra horizontal simples).
+    regua = doc.add_paragraph()
+    regua.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    rr = regua.add_run("_" * 60)
+    rr.font.color.rgb = TEAL
 
 
 def _preencher(paragrafo, texto: str) -> None:
@@ -77,6 +124,7 @@ def gerar_cto(
     doc = Document()
 
     # ----------------------------------------------------------- CABEÇALHO
+    _timbrado(doc, osc)  # timbrado da instituição no topo
     titulo = doc.add_heading("COMPROVAÇÃO DE CAPACIDADE TÉCNICO-OPERATIVA (CTO)", level=0)
     for run in titulo.runs:
         run.font.color.rgb = TEAL
