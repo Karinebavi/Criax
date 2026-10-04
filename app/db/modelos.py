@@ -23,7 +23,7 @@ class OSC(SQLModel, table=True):
 
     id: Optional[int] = Field(default=None, primary_key=True)
     nome: str
-    cnpj: str = Field(index=True)
+    cnpj: Optional[str] = Field(default=None, index=True)  # não obrigatório no cadastro
     # Endereço completo
     cep: Optional[str] = None
     logradouro: Optional[str] = None
