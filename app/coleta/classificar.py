@@ -44,8 +44,7 @@ def evidencia_de_post_instagram(item: dict) -> dict:
         "tem_logomarca": "nao_verificado",
         "bloco_cto": "1",
         "status": "pendente",
-        "curtidas": item.get("curtidas"),
-        "comentarios": item.get("comentarios"),
+        "caminho_arquivo": item.get("caminho_arquivo"),
     }
 
 

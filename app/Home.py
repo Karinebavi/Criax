@@ -49,10 +49,13 @@ def main() -> None:
     )
 
     st.info(
-        "**Fase 0 — Fundação.** Por enquanto estão disponíveis esta tela e a página "
-        "**Regras** (no menu à esquerda). As telas de Cadastro, Coleta, Curadoria, "
-        "Diagnóstico, CTO, Projeto, Orçamento e Conferência chegam nas próximas fases.",
-        icon="ℹ️",
+        "**Fluxo da CTO já disponível** (menu à esquerda, nesta ordem):\n\n"
+        "1. **Cadastro da OSC** — cadastre e selecione a entidade\n"
+        "2. **Coleta** — busca reportagens e posts do Instagram\n"
+        "3. **Curadoria** — aprove/descarte e marque logomarca e prática esportiva\n"
+        "4. **CTO** — gera o Word com timbrado e zoom na logo\n\n"
+        "As telas de Diagnóstico, Projeto, Orçamento e Conferência chegam nas próximas fases.",
+        icon="🧭",
     )
 
     st.subheader("Organizações (OSCs)")

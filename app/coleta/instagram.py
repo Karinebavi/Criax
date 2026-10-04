@@ -22,11 +22,14 @@ def coletar_instagram(
     limite_posts: int = 300,
     meses_retroativos: int = 24,
     pausa_segundos: float = 5,
-    baixar_imagens: bool = False,
+    baixar_imagens: bool = True,
+    pasta_midia: str | None = None,
 ) -> ResultadoColeta:
     """Coleta posts públicos de um perfil do Instagram.
 
-    Devolve ResultadoColeta com itens (data, legenda, curtidas, comentários, url).
+    Devolve ResultadoColeta com itens (data, legenda, curtidas, comentários, url,
+    caminho_arquivo). Quando baixar_imagens=True e pasta_midia é informado, baixa
+    a imagem de cada post para a pasta local (as fotos ficam só no computador).
     Nunca levanta exceção — bloqueios e erros viram mensagem em português.
     """
     handle = (handle or "").lstrip("@").strip()
@@ -74,6 +77,11 @@ def coletar_instagram(
             data_post = post.date_utc
             if data_post < corte:
                 break
+            caminho_arquivo = None
+            if baixar_imagens and pasta_midia:
+                caminho_arquivo = _baixar_imagem(
+                    getattr(post, "url", None), pasta_midia, post.shortcode
+                )
             itens.append(
                 {
                     "data": data_post.date().isoformat(),
@@ -81,6 +89,7 @@ def coletar_instagram(
                     "curtidas": post.likes,
                     "comentarios": post.comments,
                     "url": f"https://www.instagram.com/p/{post.shortcode}/",
+                    "caminho_arquivo": caminho_arquivo,
                 }
             )
             time.sleep(pausa_segundos)  # respeita o Instagram, evita bloqueio
@@ -98,3 +107,25 @@ def coletar_instagram(
         )
 
     return ResultadoColeta(ok=True, itens=itens)
+
+
+def _baixar_imagem(url: str | None, pasta_midia: str, shortcode: str) -> str | None:
+    """Baixa a imagem do post para a pasta local. Devolve o caminho ou None."""
+    if not url:
+        return None
+    from pathlib import Path
+
+    import httpx
+
+    try:
+        pasta = Path(pasta_midia)
+        pasta.mkdir(parents=True, exist_ok=True)
+        destino = pasta / f"{shortcode}.jpg"
+        resp = httpx.get(url, timeout=30, follow_redirects=True, trust_env=True,
+                         headers={"User-Agent": "Mozilla/5.0 (EsteiraLIE)"})
+        if resp.status_code == 200 and resp.content:
+            destino.write_bytes(resp.content)
+            return str(destino)
+    except Exception:
+        return None
+    return None

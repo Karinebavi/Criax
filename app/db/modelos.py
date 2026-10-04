@@ -7,10 +7,15 @@ fase, para manter o esquema simples. Use os utilitários em `repositorio.py`
 
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from typing import Optional
 
 from sqlmodel import Field, SQLModel
+
+
+def _agora() -> datetime:
+    """Data/hora atual com fuso (UTC) — exigido pelo SQLModel para colunas datetime."""
+    return datetime.now(timezone.utc)
 
 
 class OSC(SQLModel, table=True):
@@ -30,15 +35,19 @@ class OSC(SQLModel, table=True):
     dirigente_nome: Optional[str] = None
     dirigente_cargo: Optional[str] = None
     dirigente_cpf: Optional[str] = None  # opcional
+    # Contato
+    telefone: Optional[str] = None
+    email: Optional[str] = None
     # Presença digital
     instagram: Optional[str] = None
     facebook_url: Optional[str] = None
     site: Optional[str] = None
+    logo_path: Optional[str] = None  # caminho local da logomarca (para o timbrado)
     # Abrangência estatutária
     abrangencia_estatutaria: bool = False
     abrangencia_artigo_estatuto: Optional[str] = None
     observacoes: Optional[str] = None
-    criada_em: datetime = Field(default_factory=datetime.now)
+    criada_em: datetime = Field(default_factory=_agora)
 
 
 class ParceriaAnterior(SQLModel, table=True):
@@ -84,8 +93,8 @@ class Evidencia(SQLModel, table=True):
     tipo: Optional[str] = None  # foto | vídeo | reportagem | publicação | post | site | ...
     origem: Optional[str] = None  # instagram | facebook | notícia | site | upload manual
     url_origem: Optional[str] = None
-    data_do_fato: Optional[date] = None
-    data_coleta: datetime = Field(default_factory=datetime.now)
+    data_do_fato: Optional[str] = None  # ISO (YYYY-MM-DD) — texto, vem da coleta
+    data_coleta: datetime = Field(default_factory=_agora)
     legenda: Optional[str] = None  # legenda/texto bruto
     caminho_arquivo: Optional[str] = None
     modalidades_json: Optional[str] = None  # lista em JSON
@@ -99,6 +108,7 @@ class Evidencia(SQLModel, table=True):
     mostra_pratica_esportiva: str = "nao_verificado"  # sim | nao | nao_verificado
     link_testado: str = "nao_verificado"  # sim | nao | nao_verificado (link quebrado é descartado)
     bloco_cto: Optional[str] = None  # 1 | 2 | 3 | 4 (bloco da CTO em que a evidência entra)
+    realce_bbox_json: Optional[str] = None  # [x,y,w,h] da logo p/ zoom+seta (JSON)
 
 
 class Projeto(SQLModel, table=True):
@@ -116,7 +126,7 @@ class Projeto(SQLModel, table=True):
     criterios_selecao: Optional[str] = None
     # Status por seção, em JSON: {"objetivos": "rascunho", ...}
     status_secoes_json: Optional[str] = None
-    criado_em: datetime = Field(default_factory=datetime.now)
+    criado_em: datetime = Field(default_factory=_agora)
 
 
 class ItemOrcamento(SQLModel, table=True):

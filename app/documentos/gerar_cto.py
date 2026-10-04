@@ -105,6 +105,44 @@ def _tabela_evidencias(doc, titulo_colunas: list[str], linhas: list[list[str]]) 
             cels[i].text = str(valor or "")
 
 
+def _galeria_fotos(doc, fotos: list[dict], por_pagina: int = 4) -> None:
+    """Insere a galeria de fotos (2 colunas), com legenda e zoom+seta na logo.
+
+    Cada foto com `realce_bbox` (x,y,w,h) recebe o recorte ampliado da logomarca.
+    """
+    import tempfile
+
+    from app.documentos.realce_logo import realcar_logo
+
+    tabela = doc.add_table(rows=0, cols=2)
+    for i in range(0, len(fotos), 2):
+        linha = tabela.add_row().cells
+        for j, foto in enumerate(fotos[i : i + 2]):
+            caminho = foto.get("caminho_arquivo")
+            bbox = foto.get("realce_bbox")
+            if bbox:
+                try:
+                    tmp = Path(tempfile.gettempdir()) / f"realce_{foto.get('codigo','x')}.png"
+                    caminho = str(realcar_logo(caminho, tuple(bbox), tmp))
+                except Exception:
+                    pass
+            cel = linha[j]
+            par = cel.paragraphs[0]
+            par.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            try:
+                par.add_run().add_picture(str(caminho), width=Inches(2.7))
+            except Exception:
+                _preencher(par, "não foi possível inserir a foto; conferir o arquivo")
+            leg = cel.add_paragraph()
+            leg.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            data = foto.get("data_do_fato") or "sem data"
+            origem = foto.get("origem") or ""
+            rleg = leg.add_run(f"{foto.get('codigo','')} · {data} · {origem}")
+            rleg.italic = True
+            rleg.font.size = Pt(8)
+            rleg.font.color.rgb = CINZA
+
+
 def gerar_cto(
     osc: dict,
     evidencias: list[dict],
@@ -167,8 +205,12 @@ def gerar_cto(
 
     _titulo(doc, "1.1 Fotos de atividades esportivas (datadas, com logomarca)", 2)
     _legenda(doc, "Regra CTO-EV-LOGO-001: foto sem logomarca é descartada. 2 a 4 por página, legenda com data e origem.")
-    p = doc.add_paragraph()
-    _preencher(p, "inserir fotos datadas de atividades ESPORTIVAS com a logomarca da entidade visível (ver @guerreirasne e acervo da entidade)")
+    fotos = [e for e in do_bloco("1") if e.get("caminho_arquivo")]
+    if fotos:
+        _galeria_fotos(doc, fotos)
+    else:
+        p = doc.add_paragraph()
+        _preencher(p, "inserir fotos datadas de atividades ESPORTIVAS com a logomarca da entidade visível (coletadas do Instagram ou do acervo da entidade)")
 
     _titulo(doc, "1.2 Reportagens de imprensa (de terceiros)", 2)
     _legenda(doc, "Regra CTO-EV-TERCEIROS-001: matérias de veículos independentes citando a entidade. Link preferível ao print.")

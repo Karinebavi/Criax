@@ -6,7 +6,7 @@ status (pendente/validada/revogada) e a data de validação feita pela Karine.
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -133,6 +133,6 @@ def validar_regra(id_regra: str) -> None:
         if regra is None:
             raise ValueError(f"Regra {id_regra} não encontrada no banco.")
         regra.status = "validada"
-        regra.data_validacao = datetime.now()
+        regra.data_validacao = datetime.now(timezone.utc)
         sessao.add(regra)
         sessao.commit()

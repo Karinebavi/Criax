@@ -109,10 +109,17 @@ A página `9_Regras.py` permite ver/filtrar regras por status e mudar para
   pastas, `CLAUDE.md`, `README.md`, `config.yaml`, `.env.example`, scripts
   instalar/rodar, banco criado, Home do Streamlit abrindo, página de Regras
   mostrando o seed.
-- **Fase 1 — Cadastro da OSC + entrada manual** (ainda não iniciada)
-- **Fase 2 — Coleta automática** (ainda não iniciada)
-- **Fase 3 — Curadoria + Diagnóstico** (gate humano nº 1) (ainda não iniciada)
-- **Fase 4 — Trilha CTO (.docx)** (ainda não iniciada)
+- **Fase 1 — Cadastro da OSC** ✅ (tela `1_Cadastro_OSC.py`; entrada manual de
+  evidências/parcerias/equipe ainda a completar)
+- **Fase 2 — Coleta automática** ✅ parcial (notícias + Instagram em
+  `2_Coleta.py`; Facebook/site a completar). Instagram só funciona em IP
+  residencial (na nuvem dá 429).
+- **Fase 3 — Curadoria** ✅ (tela `3_Curadoria.py`: aprovar/descartar, marcar
+  logomarca/prática/terceiros/link, bbox do realce). **Diagnóstico por IA**
+  (Fase 3 parte 2) ainda não iniciado.
+- **Fase 4 — Trilha CTO (.docx)** ✅ (tela `5_CTO.py` + `gerar_cto.py`: timbrado,
+  4 blocos, galeria de fotos com zoom+seta, rastreabilidade). Template docxtpl
+  substituível ainda a fazer.
 - **Fase 5 — Regras da Portaria 10 + Trilha de escrita** (ainda não iniciada)
 - **Fase 6 — Planilha orçamentária (.xlsx)** (ainda não iniciada)
 - **Fase 7 — Conferência final e pacote** (gate humano nº 2) (ainda não iniciada)
@@ -189,7 +196,19 @@ tela, atualizar este `CLAUDE.md` e PARAR até a Karine aprovar.
     notícias + site (quando o site permitir) + o esqueleto da CTO.
   - **gerar_cto.py (base da Fase 4):** `app/documentos/gerar_cto.py` monta o .docx
     na estrutura do Checklist (4 blocos, ordem, rastreabilidade EV-####), com
-    [PREENCHER] só no que faltar. Não inventa foto/documento.
+    [PREENCHER] só no que faltar. Não inventa foto/documento. Tem timbrado
+    (`_timbrado`) e galeria de fotos (`_galeria_fotos`) com zoom+seta
+    (`app/documentos/realce_logo.py`, Pillow).
+  - **Sistema no ar (2026-10-04):** telas Streamlit do fluxo da CTO prontas
+    (`1_Cadastro_OSC`, `2_Coleta`, `3_Curadoria`, `5_CTO`; stubs 4/6/7/8).
+    Repositório com CRUD (`salvar_osc`, `salvar_evidencias`, `listar_evidencias`,
+    `atualizar_evidencia`). Fluxo validado ponta a ponta (cadastro→notícias→
+    curadoria→CTO). **Atalho 1 clique Windows:** `EsteiraLIE_Windows.bat`
+    (instala na 1ª vez e abre); guia em `GUIA_WINDOWS.md`.
+  - **Ajustes SQLModel 0.0.47:** datetime precisa de fuso → `_agora()` grava em
+    UTC; `Evidencia.data_do_fato` virou texto ISO (evita conflito de tipo date no
+    SQLite). OSC ganhou `telefone`, `email`, `logo_path`; Evidencia ganhou
+    `realce_bbox_json`.
 
 ## 10. Convenções de código
 
