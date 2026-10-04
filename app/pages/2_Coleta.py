@@ -73,9 +73,13 @@ with col2:
     handle = st.text_input("@ do Instagram", value=(osc.instagram or "").lstrip("@"))
     limite = st.number_input("Máximo de posts", 1, 1000, int(cfg_insta.get("limite_posts", 300)))
     st.caption(
-        "Observação: em servidores de nuvem o Instagram costuma bloquear (erro 429). "
-        "No seu computador, funciona normalmente."
+        "O Instagram hoje exige login até para perfis públicos. Para coletar "
+        "automático, informe um login abaixo (use de preferência uma conta "
+        "secundária). A senha fica só no seu computador — não é salva nem enviada."
     )
+    with st.expander("Entrar no Instagram (para liberar a coleta)"):
+        ig_user = st.text_input("Usuário do Instagram (login)")
+        ig_pass = st.text_input("Senha", type="password")
     if st.button("Coletar Instagram"):
         with st.spinner("Coletando posts (respeitando pausa entre requisições)..."):
             res = coletar_instagram(
@@ -85,6 +89,8 @@ with col2:
                 pausa_segundos=float(cfg_insta.get("pausa_segundos", 5)),
                 baixar_imagens=True,
                 pasta_midia=str(pasta_midia()),
+                usuario_login=(ig_user or "").strip() or None,
+                senha_login=(ig_pass or "").strip() or None,
             )
         if not res.ok and not res.itens:
             st.error(res.mensagem)

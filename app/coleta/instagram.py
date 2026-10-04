@@ -24,6 +24,8 @@ def coletar_instagram(
     pausa_segundos: float = 5,
     baixar_imagens: bool = True,
     pasta_midia: str | None = None,
+    usuario_login: str | None = None,
+    senha_login: str | None = None,
 ) -> ResultadoColeta:
     """Coleta posts públicos de um perfil do Instagram.
 
@@ -54,6 +56,25 @@ def coletar_instagram(
         compress_json=False,
         quiet=True,
     )
+
+    # Login opcional (o Instagram hoje exige login até para perfis públicos).
+    # A senha fica só na memória desta execução; nada é gravado nem enviado.
+    if usuario_login and senha_login:
+        try:
+            carregador.login(usuario_login, senha_login)
+        except instaloader.exceptions.TwoFactorAuthRequiredException:
+            return ResultadoColeta(
+                ok=False, erro="2fa",
+                mensagem="A conta tem verificação em duas etapas (2FA). Use uma conta sem 2FA para a coleta, ou desative o 2FA nessa conta.",
+            )
+        except instaloader.exceptions.BadCredentialsException:
+            return ResultadoColeta(ok=False, erro="credenciais", mensagem="Usuário ou senha do Instagram incorretos.")
+        except Exception as erro:
+            return ResultadoColeta(
+                ok=False, erro=str(erro),
+                mensagem=("Não foi possível entrar no Instagram (pode ter caído em verificação de segurança). "
+                          "Tente de novo em alguns minutos, confirme o login no app do Instagram, ou use outra conta."),
+            )
 
     try:
         perfil = instaloader.Profile.from_username(carregador.context, handle)
