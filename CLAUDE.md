@@ -170,6 +170,16 @@ tela, atualizar este `CLAUDE.md` e PARAR até a Karine aprovar.
     esportiva e logomarca; a Curadoria (Fase 3) testa link e descarta foto sem
     logomarca; a trilha CTO (Fase 4) organiza as evidências nos 4 blocos e exporta
     na ordem de montagem, com painel de completude por bloco (14/8/8/7).
+  - **Protótipo de coleta (a pedido da Karine):** criados `app/coleta/noticias.py`
+    (Google Notícias via httpx+feedparser — httpx para passar pelo proxy),
+    `app/coleta/instagram.py` (instaloader, sem login, degrada com aviso se
+    bloquear), `app/coleta/classificar.py` (converte em evidências do Bloco 1 com
+    força probatória) e `scripts/prototipo_coleta.py` (roda para 1 OSC e gera
+    relatório HTML). Testes `tests/test_coleta.py` sem rede. Total: 24 testes.
+  - **BLOQUEIO DE REDE neste ambiente de nuvem:** a política de egress bloqueia
+    news.google.com e instagram.com (403). O protótipo só roda de verdade se a
+    Karine liberar esses domínios em Network access (Edit do ambiente) OU na
+    máquina dela. Código pronto; falta a rede. NÃO burlar o proxy.
 
 ## 10. Convenções de código
 
