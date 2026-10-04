@@ -32,7 +32,7 @@ def coletar_instagram(
     a imagem de cada post para a pasta local (as fotos ficam só no computador).
     Nunca levanta exceção — bloqueios e erros viram mensagem em português.
     """
-    handle = (handle or "").lstrip("@").strip()
+    handle = _normalizar_handle(handle)
     if not handle:
         return ResultadoColeta(ok=False, erro="handle vazio", mensagem="Informe o @ do Instagram.")
 
@@ -107,6 +107,22 @@ def coletar_instagram(
         )
 
     return ResultadoColeta(ok=True, itens=itens)
+
+
+def _normalizar_handle(entrada: str | None) -> str:
+    """Extrai o nome de usuário, aceitando @usuario ou um link do Instagram.
+
+    Ex.: 'https://www.instagram.com/guerreirasne/' -> 'guerreirasne'
+         '@guerreirasne' -> 'guerreirasne'
+    """
+    texto = (entrada or "").strip()
+    if not texto:
+        return ""
+    if "instagram.com" in texto:
+        # Pega o primeiro trecho do caminho depois do domínio.
+        depois = texto.split("instagram.com/", 1)[1]
+        texto = depois.split("/")[0].split("?")[0]
+    return texto.lstrip("@").strip().strip("/")
 
 
 def _baixar_imagem(url: str | None, pasta_midia: str, shortcode: str) -> str | None:
